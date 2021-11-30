@@ -1,0 +1,17 @@
+.tickets{
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ticket{
+  width: 250px;
+  height: 200px;
+  border: 1px solid #eeeeee;
+}
+.app{
+  display: flex;
+  justify-content: space-around;
+}
