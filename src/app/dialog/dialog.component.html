@@ -1,0 +1,10 @@
+<form novalidate (ngSubmit)="createToken()">
+  <ngx-stripe-card
+    [options]="cardOptions"
+    [elementsOptions]="elementsOptions"
+  ></ngx-stripe-card>
+  <button mat-button type="submit">
+    CREATE TOKEN
+  </button>
+</form>
+<button mat-button (click)="onNoClick()">Exit</button>
