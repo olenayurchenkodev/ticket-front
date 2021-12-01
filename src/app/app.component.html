@@ -4,19 +4,12 @@
     <div
       class="tickets"
       *ngIf="tickets">
-      <div
+      <app-ticket
         *ngFor="let ticket of tickets"
         [id]="ticket.id"
+        [price]="ticket.price"
         class="ticket">
-        <p>{{ticket.name}}</p>
-        <p>{{ticket.id}}</p>
-        <p>{{ticket.date}}</p>
-        <p>{{ticket.price}}</p>
-        <button
-          (click)="addToBucket(ticket)"
-          [disabled]=""
-        >Buy</button>
-      </div>
+      </app-ticket>
     </div>
   </div>
   <div>
@@ -24,14 +17,13 @@
     <div
       class="bucket"
       *ngIf="bucket">
-      <div
+      <app-ticket
         *ngFor="let ticket of bucket"
+        [id]="ticket.id"
+        [price]="ticket.price"
         class="ticket">
-        <p>{{ticket.name}}</p>
-        <p>{{ticket.id}}</p>
-        <p>{{ticket.date}}</p>
-        <p>{{ticket.price}}</p>
-      </div>
+      </app-ticket>
     </div>
+    <button mat-raised-button (click)="openDialog()">Buy tickets from the bucket</button>
   </div>
 </div>

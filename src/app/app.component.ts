@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Ticket} from '../interfaces/ticket.interface'
-import {formatDate} from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
 import './app.component.css';
+import {Ticket} from './ticket/ticket.component';
+import {TicketDataService} from "./services/ticketData.service";
+import {Subscription} from "rxjs";
+import {DialogComponent} from "./dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -10,26 +13,42 @@ import './app.component.css';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  receiveData: Subscription;
   bucket: Ticket[] = [];
-  tickets: Ticket[] = [];
+  tickets: Ticket[] = [
+    {price: 120, id: uuidv4()},
+    {price: 120, id: uuidv4()},
+    {price: 120, id: uuidv4()},
+    {price: 60, id: uuidv4()},
+    {price: 60, id: uuidv4()},
+    {price: 60, id: uuidv4()},
+  ];
 
-  ngOnInit(): void {
-    this.render()
+  constructor(
+    public shareTicket: TicketDataService,
+    public dialog: MatDialog
+  ) {
+    this.receiveData = this.shareTicket.getClickEvent()
+      .subscribe(s => {
+        this.addToBucket(s)
+      })
   }
 
-  render():void {
-    for (let i = 0; i < 8; i++) {
-      this.tickets[i] = {
-        id: uuidv4(),
-        price: 120,
-        name: i.toString(),
-        date: formatDate(new Date(), 'yyyy/MM/dd', 'en')
-      }
-    }
+  ngOnInit(): void {
   }
 
   addToBucket(ticket: Ticket): void {
     this.bucket.push(ticket);
+  }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: {name: 'name', animal: 'animal'},
+    });
+
+    dialogRef.afterClosed().subscribe(s => {
+      console.log('The dialog was closed');
+    });
   }
 }
