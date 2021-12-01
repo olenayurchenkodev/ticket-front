@@ -1,8 +1,9 @@
-<ng-container *ngIf="ticket">
-  <p>{{ticket.id}}</p>
-  <p>{{ticket.price}}</p>
-</ng-container>
+<div class="ticket">
+  <ng-container *ngIf="ticket">
+    <p>{{ticket.id}}</p>
+    <p>{{ticket.price}}</p>
+  </ng-container>
 
-<button (click)="addToBucket()" [disabled]="clickButton">Buy</button>
-
+  <button (click)="addToBucket()" [disabled]="clickButton">Buy</button>
+</div>
 

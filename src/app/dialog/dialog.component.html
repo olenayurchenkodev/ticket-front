@@ -1,10 +1,14 @@
-<form novalidate (ngSubmit)="createToken()">
+<form novalidate (ngSubmit)="createToken()" [formGroup]="stripeCard">
+  <label>Name</label>
+  <input  type="text" formControlName="name">
   <ngx-stripe-card
     [options]="cardOptions"
     [elementsOptions]="elementsOptions"
+    (change)="change($event)"
   ></ngx-stripe-card>
-  <button mat-button type="submit">
+  <span>to pay: {{data.amount}}</span>
+  <button [disabled]="!validCard || !this.stripeCard.valid" mat-button type="submit">
     CREATE TOKEN
   </button>
 </form>
-<button mat-button (click)="onNoClick()">Exit</button>
+<button mat-button (click)="closeModal()">Exit</button>

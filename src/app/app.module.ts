@@ -11,12 +11,15 @@ import {TicketComponent} from "./ticket/ticket.component";
 import {DialogComponent} from "./dialog/dialog.component";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {PaymentMessageComponent} from "./paymentMessage/paymentMessage.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     TicketComponent,
-    DialogComponent
+    DialogComponent,
+    PaymentMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -25,9 +28,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    NgxStripeModule.forRoot('stripe-publishable-key'),
+    NgxStripeModule.forRoot('pk_test_51K1qeXHdq0KWWsCrNAW0kb6zXfZzu5woq819UZ32fwMzLZIZ2lYLw5beHSXrJahy0UdXpnTlRSx6Ip7wUEibRzPa00DJASL9v3'),
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
   ],
   exports: [
     FormsModule,

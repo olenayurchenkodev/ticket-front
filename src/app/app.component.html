@@ -11,6 +11,11 @@
         class="ticket">
       </app-ticket>
     </div>
+    <div
+      *ngIf="!tickets"
+      class="lds-ring">
+      <div></div><div></div><div></div><div></div>
+    </div>
   </div>
   <div>
   <h4>Bucket</h4>
@@ -24,6 +29,7 @@
         class="ticket">
       </app-ticket>
     </div>
-    <button mat-raised-button (click)="openDialog()">Buy tickets from the bucket</button>
+    <h4>To pay: {{amount}}</h4>
+    <button mat-raised-button (click)="openDialog()">Buy tickets</button>
   </div>
 </div>

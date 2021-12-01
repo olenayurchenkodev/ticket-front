@@ -1,8 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {StripeCardComponent, StripeService} from "ngx-stripe";
-import {FormBuilder} from "@angular/forms";
-import {StripeCardElementOptions, StripeElementsOptions} from "@stripe/stripe-js";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {StripeCardElementChangeEvent, StripeCardElementOptions, StripeElementsOptions} from "@stripe/stripe-js";
+import {TokenCardService} from "../services/tokenCard.service";
 
 
 @Component({
@@ -10,15 +11,21 @@ import {StripeCardElementOptions, StripeElementsOptions} from "@stripe/stripe-js
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent{
+export class DialogComponent {
   @ViewChild(StripeCardComponent) card!: StripeCardComponent;
+  public validCard: boolean = false;
+  public stripeCard: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
+    private stripeService: StripeService,
     public dialogRef: MatDialogRef<DialogComponent>,
-    private fb: FormBuilder, private stripeService: StripeService
-  ) {}
+    public shareTokenToDB: TokenCardService,
+    @Inject(MAT_DIALOG_DATA) public data: {amount: number},
+  ) {
+  }
 
-  onNoClick(): void {
+  closeModal(): void {
     this.dialogRef.close();
   }
 
@@ -44,18 +51,42 @@ export class DialogComponent{
   };
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm(): void{
+    this.stripeCard = this.fb.group({
+      name: [null, [Validators.required, Validators.minLength(2)]]
+    });
   }
 
   createToken(): void {
-    this.stripeService
-      .createToken(this.card.element)
-      .subscribe((result) => {
-        if (result.token) {
-          console.log(result.token.id);
-        } else if (result.error) {
-          console.log(result.error.message);
-        }
-      });
+    const name = this.stripeCard.value.name;
+    if (this.validCard) {
+      this.stripeService
+        .createToken(this.card.element, {name})
+        .subscribe((result) => {
+          if (result.token) {
+            console.log(result.token.id);
+            this.sendPayment(result.token.id, this.data.amount)
+          } else if (result.error) {
+            console.log(result.error.message);
+          }
+        });
+    }
   }
 
+  sendPayment(token: string, amount: number): void {
+    this.shareTokenToDB.sendPayment(token, amount)
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      },
+        () => {
+          this.dialogRef.close(false);
+        })
+  }
+
+  change(event: StripeCardElementChangeEvent): void {
+    this.validCard = event.complete;
+  }
 }
