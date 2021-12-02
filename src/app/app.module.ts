@@ -1,25 +1,31 @@
-import { NgModule} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {BrowserModule} from '@angular/platform-browser';
+import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { NgxStripeModule } from 'ngx-stripe';
+import {NgxStripeModule} from 'ngx-stripe';
 
-import { AppComponent } from './app.component';
+import {PaymentMessageComponent} from "./payment-message/payment-message.component";
 import {TicketComponent} from "./ticket/ticket.component";
 import {DialogComponent} from "./dialog/dialog.component";
-import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {PaymentMessageComponent} from "./paymentMessage/paymentMessage.component";
+import {AppComponent} from './app.component';
+import {SK} from './config/config';
+import { TicketsShopComponent } from './tickets-shop/tickets-shop.component';
+import { LoaderComponent } from './loader/loader.component'
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TicketComponent,
     DialogComponent,
-    PaymentMessageComponent
+    PaymentMessageComponent,
+    TicketsShopComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +34,7 @@ import {PaymentMessageComponent} from "./paymentMessage/paymentMessage.component
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    NgxStripeModule.forRoot('pk_test_51K1qeXHdq0KWWsCrNAW0kb6zXfZzu5woq819UZ32fwMzLZIZ2lYLw5beHSXrJahy0UdXpnTlRSx6Ip7wUEibRzPa00DJASL9v3'),
+    NgxStripeModule.forRoot(SK),
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule
@@ -43,4 +49,5 @@ import {PaymentMessageComponent} from "./paymentMessage/paymentMessage.component
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

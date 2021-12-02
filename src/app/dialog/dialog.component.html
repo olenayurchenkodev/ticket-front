@@ -1,14 +1,27 @@
-<form novalidate (ngSubmit)="createToken()" [formGroup]="stripeCard">
-  <label>Name</label>
-  <input  type="text" formControlName="name">
-  <ngx-stripe-card
-    [options]="cardOptions"
-    [elementsOptions]="elementsOptions"
-    (change)="change($event)"
-  ></ngx-stripe-card>
-  <span>to pay: {{data.amount}}</span>
-  <button [disabled]="!validCard || !this.stripeCard.valid" mat-button type="submit">
-    CREATE TOKEN
-  </button>
-</form>
-<button mat-button (click)="closeModal()">Exit</button>
+<div [hidden]="isLoading" class="dialog">
+  <form novalidate (ngSubmit)="createToken()" [formGroup]="stripeCardForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <ngx-stripe-card
+      [options]="cardOptions"
+      [elementsOptions]="elementsOptions"
+      (change)="change($event)"
+    ></ngx-stripe-card>
+    <div class="details">
+      <p>to pay: <strong>{{data.amount}}</strong></p>
+      <button
+        [disabled]="!isValidCard || !this.stripeCardForm.valid"
+        mat-raised-button type="submit">
+        CREATE TOKEN
+      </button>
+    </div>
+  </form>
+  <div class="exit-button">
+     <button mat-raised-button (click)="closeModal()">Exit</button>
+  </div>
+</div>
+<app-loader
+  *ngIf="isLoading"
+></app-loader>
