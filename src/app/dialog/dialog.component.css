@@ -1,0 +1,22 @@
+
+
+.dialog {
+  padding: 40px;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+}
+
+.exit-button {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  outline: none;
+}
+
+

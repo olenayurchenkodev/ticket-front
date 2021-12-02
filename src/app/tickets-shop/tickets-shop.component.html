@@ -1,0 +1,40 @@
+<div class="shop">
+  <div class="tickets-container">
+    <h2>Tickets</h2>
+    <div
+      class="tickets">
+      <ng-container *ngFor="let ticket of (tickets$ | async)">
+        <div class="ticket">
+          <app-ticket
+            [ticket]="ticket">
+          </app-ticket>
+          <button
+            mat-raised-button
+            class="button"
+            (click)="openDialog(ticket.price, ticket.id)"
+            [disabled]="isBuyButtonDisabled"
+          >Buy ticket</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="bucket">
+    <h2>All bought tickets</h2>
+    <button
+      mat-raised-button
+      (click)="toggle()"
+    >{{isBoughtTicketsListHidden?'Show all bought tickets':'Hide all bought tickets'}}</button>
+    <div [hidden]="isBoughtTicketsListHidden"
+         *ngIf="boughtTickets">
+      <div class="bought-ticket"
+           *ngFor="let ticket of (boughtTickets$ | async)">
+        <app-ticket
+          [ticket]="ticket">
+        </app-ticket>
+      </div>
+      <div class="refresh-button">
+        <button mat-raised-button (click)="getBoughtTickets()">Refresh list</button>
+      </div>
+    </div>
+  </div>
+</div>

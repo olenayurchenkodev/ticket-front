@@ -1,0 +1,52 @@
+.tickets{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.tickets-container{
+  width: 900px;
+  padding: 30px;
+}
+h2{
+  text-align: center;
+}
+.ticket{
+  width: 200px;
+  height: fit-content;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #eeeeee;
+}
+.bought-ticket-container{
+  width: 300px;
+  border: black;
+}
+.bought-ticket{
+  text-align: center;
+  width: 250px;
+  height: 90px;
+  margin: 30px;
+  border: 1px solid #eeeeee;
+}
+.refresh-button{
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+.shop{
+  display: flex;
+  justify-content: space-around;
+}
+.bucket{
+  width: 400px;
+  display: flex;
+  padding: 30px;
+  flex-direction: column;
+  align-items: center;
+}
+.loader-container{
+  display: flex;
+  justify-content: center;
+}
+

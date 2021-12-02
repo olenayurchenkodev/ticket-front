@@ -1,0 +1,6 @@
+<div>
+    <h4>{{ticket.name}}</h4>
+    <p>{{ticket.price}} $</p>
+    <p *ngIf="ticket?.date">{{ticket?.date | date:'MMM d, y, h:mm'}}</p>
+</div>
+
